@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Practice Locations Map</title>
+    <meta charset="utf-8" />
+    <style>
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <script>
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 4,
+          center: { lat: 39.8283, lng: -98.5795 }, // Center of USA
+        });
+
+        const locations = [
+          {
+            name: "Ozark Oral Surgery",
+            address: "123 Main St, Little Rock, AR",
+            lat: 34.7465,
+            lng: -92.2896,
+          },
+          {
+            name: "Nashville Facial Surgery",
+            address: "456 Broadway, Nashville, TN",
+            lat: 36.1627,
+            lng: -86.7816,
+          },
+          {
+            name: "Austin Oral & Maxillofacial Center",
+
+            address: "789 Congress Ave, Austin, TX",
+            lat: 30.2672,
+            lng: -97.7431,
+          },
+          // Add more locations here
+        ];
+
+        locations.forEach((loc) => {
+          const marker = new google.maps.Marker({
+            position: { lat: loc.lat, lng: loc.lng },
+            map,
+            title: loc.name,
+          });
+
+          const infowindow = new google.maps.InfoWindow({
+            content: `<div style="font-family:Arial,sans-serif;font-size:14px;line-height:1.4;">
+                        <strong>${loc.name}</strong><br>${loc.address}
+                      </div>`,
+          });
+
+          marker.addListener("mouseover", () => infowindow.open(map, marker));
+          marker.addListener("mouseout", () => infowindow.close());
+        });
+      }
+    </script>
+  </head>
+  <body onload="initMap()">
+    <div id="map"></div>
+  </body>
+</html>
